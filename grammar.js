@@ -2,6 +2,7 @@
  * @file C grammar for tree-sitter
  * @author Max Brunsfeld <maxbrunsfeld@gmail.com>
  * @author Amaan Qureshi <amaanq12@gmail.com>
+ * @author Stefan Richter <jdevsr3@gmail.com>
  * @license MIT
  */
 
@@ -100,6 +101,7 @@ module.exports = grammar({
       $.preproc_def,
       $.preproc_function_def,
       $.preproc_call,
+      $.esql_statement,
     ),
 
     _block_item: $ => choice(
@@ -117,6 +119,7 @@ module.exports = grammar({
       $.preproc_def,
       $.preproc_function_def,
       $.preproc_call,
+      $.esql_statement,
     ),
 
     // Preprocesser
@@ -234,6 +237,68 @@ module.exports = grammar({
         ));
       }));
     },
+
+    // Embedded SQL
+
+    esql_statement: $ => seq(
+      $.esql_prefix,
+      choice(
+        $.esql_execute,
+        $.esql_var,
+        $._esql_other,
+      ),
+      ';',
+    ),
+
+    esql_execute: $ => seq(
+      $.esql_keyword_execute,
+      repeat(choice($._esql_part, ';')),
+      $.esql_keyword_end_exec,
+    ),
+
+    esql_var: $ => seq(
+      $.esql_keyword_var,
+      /\w+/,
+      repeat1($._esql_part),
+    ),
+
+    _esql_other: $ => repeat1($._esql_part),
+
+    _esql_part: $ => choice(
+      $.esql_parenthesis, $.esql_comma, $.esql_operator, $.esql_variable,
+      $.esql_string, $.esql_number, $.esql_function_call, $.esql_keyword, $.esql_token,
+    ),
+
+    esql_prefix: $ => seq(/EXEC/i, /SQL/i),
+
+    esql_keyword_execute: $ => /EXECUTE/i,
+    esql_keyword_end_exec: $ => /END-EXEC/i,
+    esql_keyword_var: $ => /VAR/i,
+    esql_keyword: $ => choice(
+      /SELECT|DISTINCT|FROM|AND|OR|WHERE|JOIN|INNER|LEFT|RIGHT|ON|EXISTS|CASE|WHEN|THEN|ELSE|AS/i,
+      /CREATE|ALTER|DROP|TABLE|VIEW|PROCEDURE|FUNCTION/i,
+      /INSERT|INTO|UPDATE|ORDER\s+BY|GROUP\s+BY|HAVING|PARTITION\s+BY|OVER/i,
+      /BEGIN|END|WHILE|FOR|LOOP|IF|ELSE|ELSIF|IN|EXCEPTION|CURSOR|IS|TYPE|CONSTANT/i,
+      /INCLUDE|CONNECT|GET|ALLOCATE|DESCRIBE|DECLARE|WHENEVER|COMMIT|ROLLBACK|CLOSE|FETCH/i,
+    ),
+
+    esql_function_call: $ => seq(
+      field('function', $.esql_function),
+      $.esql_parenthesis,
+    ),
+
+    esql_function: $ => choice(
+      /COUNT|SUM|UPPER|LOWER|AVG|MAX|MIN|SUBSTR|DECODE|COALESCE|ABS|CAST|CONCAT|SQRT|POW/i,
+      /SQL_ERROR|TO_CHAR|TO_DATE|TO_CLOB|TO_LOB|TO_NUMBER|NVL|LCASE|UCASE/i,
+    ),
+
+    esql_parenthesis: $ => seq('(', repeat($._esql_part), ')'),
+    esql_comma: $ => ',',
+    esql_operator: $ => choice(':=', '<', '>', '=', '+', '-', '*', '/'),
+    esql_string: $ => /'(?:[^']|'')*'/,
+    esql_number: $ => /[0-9]+(\.[0-9]+)?/,
+    esql_variable: $ => /:\w+/,
+    esql_token: $ => /[^;\s"(),<>=*/+-]+|"[^"]+"/,
 
     // Main Grammar
 

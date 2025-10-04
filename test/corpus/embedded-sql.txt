@@ -1,0 +1,189 @@
+================================================================================
+EXEC SQL INCLUDE SQLCA.H
+================================================================================
+
+EXEC SQL INCLUDE SQLCA.H;
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (esql_statement
+    (esql_prefix)
+    (esql_keyword)
+    (esql_token)))
+
+================================================================================
+EXEC SQL SELECT
+================================================================================
+
+EXEC SQL SELECT NVL(MAX(EMPNO),0) + 10
+           INTO :empno
+           FROM EMP
+           ORDER BY empNo;
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (esql_statement
+    (esql_prefix)
+    (esql_keyword)
+    (esql_function_call
+      (esql_function)
+      (esql_parenthesis
+        (esql_function_call
+          (esql_function)
+          (esql_parenthesis
+            (esql_token)))
+        (esql_comma)
+        (esql_number)))
+    (esql_operator)
+    (esql_number)
+    (esql_keyword)
+    (esql_variable)
+    (esql_keyword)
+    (esql_token)
+    (esql_keyword)
+    (esql_token)))
+
+================================================================================
+EXEC SQL CREATE TABLE
+================================================================================
+
+EXEC SQL CREATE TABLE "Emp 2" (empno number(4));
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (esql_statement
+    (esql_prefix)
+    (esql_keyword)
+    (esql_keyword)
+    (esql_token)
+    (esql_parenthesis
+      (esql_token)
+      (esql_token)
+      (esql_parenthesis
+        (esql_number)))))
+
+================================================================================
+EXEC SQL BEGIN DECLARE SECTION
+================================================================================
+
+EXEC SQL BEGIN DECLARE SECTION;
+VARCHAR  user[31];
+EXEC SQL END DECLARE SECTION;
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (esql_statement
+    (esql_prefix)
+    (esql_keyword)
+    (esql_keyword)
+    (esql_token))
+  (declaration
+    (type_identifier)
+    (array_declarator
+      (identifier)
+      (number_literal)))
+  (esql_statement
+    (esql_prefix)
+    (esql_keyword)
+    (esql_keyword)
+    (esql_token)))
+
+================================================================================
+EXEC SQL VAR
+================================================================================
+
+#define LENGTH 10
+
+EXEC SQL BEGIN DECLARE SECTION;
+char ename[LENGTH+1];
+exec sql var ename is string(LENGTH+1) convbufsz is (LENGTH*2);
+EXEC SQL END DECLARE SECTION;
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (preproc_def
+    (identifier)
+    (preproc_arg))
+  (esql_statement
+    (esql_prefix)
+    (esql_keyword)
+    (esql_keyword)
+    (esql_token))
+  (declaration
+    (primitive_type)
+    (array_declarator
+      (identifier)
+      (binary_expression
+        (identifier)
+        (number_literal))))
+  (esql_statement
+    (esql_prefix)
+    (esql_var
+      (esql_keyword_var)
+      (esql_keyword)
+      (esql_token)
+      (esql_parenthesis
+        (esql_token)
+        (esql_operator)
+        (esql_number))
+      (esql_token)
+      (esql_keyword)
+      (esql_parenthesis
+        (esql_token)
+        (esql_operator)
+        (esql_number))))
+  (esql_statement
+    (esql_prefix)
+    (esql_keyword)
+    (esql_keyword)
+    (esql_token)))
+
+================================================================================
+EXEC SQL EXECUTE
+================================================================================
+
+EXEC SQL EXECUTE
+   begin
+     emp_pkg.givePayRaise(:numEmps, :empName, :errCode, :errText);
+   end;
+END-EXEC;
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (esql_statement
+    (esql_prefix)
+    (esql_execute
+      (esql_keyword_execute)
+      (esql_keyword)
+      (esql_token)
+      (esql_parenthesis
+        (esql_variable)
+        (esql_comma)
+        (esql_variable)
+        (esql_comma)
+        (esql_variable)
+        (esql_comma)
+        (esql_variable))
+      (esql_keyword)
+      (esql_keyword_end_exec))))
+
+================================================================================
+EXEC SQL ALLOCATE DESCRIPTOR
+================================================================================
+
+EXEC SQL ALLOCATE DESCRIPTOR 'input_descriptor';
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (esql_statement
+    (esql_prefix)
+    (esql_keyword)
+    (esql_token)
+    (esql_string)))

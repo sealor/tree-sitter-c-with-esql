@@ -1,6 +1,6 @@
 {
   "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/grammar.schema.json",
-  "name": "c",
+  "name": "c_with_esql",
   "word": "identifier",
   "rules": {
     "translation_unit": {
@@ -73,6 +73,10 @@
         {
           "type": "SYMBOL",
           "name": "preproc_call"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "esql_statement"
         }
       ]
     },
@@ -139,6 +143,10 @@
         {
           "type": "SYMBOL",
           "name": "preproc_call"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "esql_statement"
         }
       ]
     },
@@ -2775,6 +2783,302 @@
           }
         }
       ]
+    },
+    "esql_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "esql_prefix"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "esql_execute"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "esql_var"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_esql_other"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": ";"
+        }
+      ]
+    },
+    "esql_execute": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "esql_keyword_execute"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_esql_part"
+              },
+              {
+                "type": "STRING",
+                "value": ";"
+              }
+            ]
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "esql_keyword_end_exec"
+        }
+      ]
+    },
+    "esql_var": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "esql_keyword_var"
+        },
+        {
+          "type": "PATTERN",
+          "value": "\\w+"
+        },
+        {
+          "type": "REPEAT1",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_esql_part"
+          }
+        }
+      ]
+    },
+    "_esql_other": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "SYMBOL",
+        "name": "_esql_part"
+      }
+    },
+    "_esql_part": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "esql_parenthesis"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "esql_comma"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "esql_operator"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "esql_variable"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "esql_string"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "esql_number"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "esql_function_call"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "esql_keyword"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "esql_token"
+        }
+      ]
+    },
+    "esql_prefix": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "EXEC",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "SQL",
+          "flags": "i"
+        }
+      ]
+    },
+    "esql_keyword_execute": {
+      "type": "PATTERN",
+      "value": "EXECUTE",
+      "flags": "i"
+    },
+    "esql_keyword_end_exec": {
+      "type": "PATTERN",
+      "value": "END-EXEC",
+      "flags": "i"
+    },
+    "esql_keyword_var": {
+      "type": "PATTERN",
+      "value": "VAR",
+      "flags": "i"
+    },
+    "esql_keyword": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "SELECT|DISTINCT|FROM|AND|OR|WHERE|JOIN|INNER|LEFT|RIGHT|ON|EXISTS|CASE|WHEN|THEN|ELSE|AS",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "CREATE|ALTER|DROP|TABLE|VIEW|PROCEDURE|FUNCTION",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "INSERT|INTO|UPDATE|ORDER\\s+BY|GROUP\\s+BY|HAVING|PARTITION\\s+BY|OVER",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "BEGIN|END|WHILE|FOR|LOOP|IF|ELSE|ELSIF|IN|EXCEPTION|CURSOR|IS|TYPE|CONSTANT",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "INCLUDE|CONNECT|GET|ALLOCATE|DESCRIBE|DECLARE|WHENEVER|COMMIT|ROLLBACK|CLOSE|FETCH",
+          "flags": "i"
+        }
+      ]
+    },
+    "esql_function_call": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "function",
+          "content": {
+            "type": "SYMBOL",
+            "name": "esql_function"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "esql_parenthesis"
+        }
+      ]
+    },
+    "esql_function": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "COUNT|SUM|UPPER|LOWER|AVG|MAX|MIN|SUBSTR|DECODE|COALESCE|ABS|CAST|CONCAT|SQRT|POW",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "SQL_ERROR|TO_CHAR|TO_DATE|TO_CLOB|TO_LOB|TO_NUMBER|NVL|LCASE|UCASE",
+          "flags": "i"
+        }
+      ]
+    },
+    "esql_parenthesis": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_esql_part"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
+    "esql_comma": {
+      "type": "STRING",
+      "value": ","
+    },
+    "esql_operator": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": ":="
+        },
+        {
+          "type": "STRING",
+          "value": "<"
+        },
+        {
+          "type": "STRING",
+          "value": ">"
+        },
+        {
+          "type": "STRING",
+          "value": "="
+        },
+        {
+          "type": "STRING",
+          "value": "+"
+        },
+        {
+          "type": "STRING",
+          "value": "-"
+        },
+        {
+          "type": "STRING",
+          "value": "*"
+        },
+        {
+          "type": "STRING",
+          "value": "/"
+        }
+      ]
+    },
+    "esql_string": {
+      "type": "PATTERN",
+      "value": "'(?:[^']|'')*'"
+    },
+    "esql_number": {
+      "type": "PATTERN",
+      "value": "[0-9]+(\\.[0-9]+)?"
+    },
+    "esql_variable": {
+      "type": "PATTERN",
+      "value": ":\\w+"
+    },
+    "esql_token": {
+      "type": "PATTERN",
+      "value": "[^;\\s\"(),<>=*/+-]+|\"[^\"]+\""
     },
     "function_definition": {
       "type": "SEQ",

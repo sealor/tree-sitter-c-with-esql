@@ -1120,6 +1120,10 @@
           "named": true
         },
         {
+          "type": "esql_statement",
+          "named": true
+        },
+        {
           "type": "function_definition",
           "named": true
         },
@@ -1327,6 +1331,10 @@
           "named": true
         },
         {
+          "type": "esql_statement",
+          "named": true
+        },
+        {
           "type": "function_definition",
           "named": true
         },
@@ -1508,6 +1516,269 @@
         },
         {
           "type": "preproc_ifdef",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "esql_comma",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "esql_execute",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "esql_comma",
+          "named": true
+        },
+        {
+          "type": "esql_function_call",
+          "named": true
+        },
+        {
+          "type": "esql_keyword",
+          "named": true
+        },
+        {
+          "type": "esql_keyword_end_exec",
+          "named": true
+        },
+        {
+          "type": "esql_keyword_execute",
+          "named": true
+        },
+        {
+          "type": "esql_number",
+          "named": true
+        },
+        {
+          "type": "esql_operator",
+          "named": true
+        },
+        {
+          "type": "esql_parenthesis",
+          "named": true
+        },
+        {
+          "type": "esql_string",
+          "named": true
+        },
+        {
+          "type": "esql_token",
+          "named": true
+        },
+        {
+          "type": "esql_variable",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "esql_function",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "esql_function_call",
+    "named": true,
+    "fields": {
+      "function": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "esql_function",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "esql_parenthesis",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "esql_keyword",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "esql_operator",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "esql_parenthesis",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "esql_comma",
+          "named": true
+        },
+        {
+          "type": "esql_function_call",
+          "named": true
+        },
+        {
+          "type": "esql_keyword",
+          "named": true
+        },
+        {
+          "type": "esql_number",
+          "named": true
+        },
+        {
+          "type": "esql_operator",
+          "named": true
+        },
+        {
+          "type": "esql_parenthesis",
+          "named": true
+        },
+        {
+          "type": "esql_string",
+          "named": true
+        },
+        {
+          "type": "esql_token",
+          "named": true
+        },
+        {
+          "type": "esql_variable",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "esql_prefix",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "esql_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "esql_comma",
+          "named": true
+        },
+        {
+          "type": "esql_execute",
+          "named": true
+        },
+        {
+          "type": "esql_function_call",
+          "named": true
+        },
+        {
+          "type": "esql_keyword",
+          "named": true
+        },
+        {
+          "type": "esql_number",
+          "named": true
+        },
+        {
+          "type": "esql_operator",
+          "named": true
+        },
+        {
+          "type": "esql_parenthesis",
+          "named": true
+        },
+        {
+          "type": "esql_prefix",
+          "named": true
+        },
+        {
+          "type": "esql_string",
+          "named": true
+        },
+        {
+          "type": "esql_token",
+          "named": true
+        },
+        {
+          "type": "esql_var",
+          "named": true
+        },
+        {
+          "type": "esql_variable",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "esql_var",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "esql_comma",
+          "named": true
+        },
+        {
+          "type": "esql_function_call",
+          "named": true
+        },
+        {
+          "type": "esql_keyword",
+          "named": true
+        },
+        {
+          "type": "esql_keyword_var",
+          "named": true
+        },
+        {
+          "type": "esql_number",
+          "named": true
+        },
+        {
+          "type": "esql_operator",
+          "named": true
+        },
+        {
+          "type": "esql_parenthesis",
+          "named": true
+        },
+        {
+          "type": "esql_string",
+          "named": true
+        },
+        {
+          "type": "esql_token",
+          "named": true
+        },
+        {
+          "type": "esql_variable",
           "named": true
         }
       ]
@@ -2800,6 +3071,10 @@
           "named": true
         },
         {
+          "type": "esql_statement",
+          "named": true
+        },
+        {
           "type": "field_declaration",
           "named": true
         },
@@ -2896,6 +3171,10 @@
           "named": true
         },
         {
+          "type": "esql_statement",
+          "named": true
+        },
+        {
           "type": "field_declaration",
           "named": true
         },
@@ -2960,6 +3239,10 @@
         },
         {
           "type": "enumerator",
+          "named": true
+        },
+        {
+          "type": "esql_statement",
           "named": true
         },
         {
@@ -3123,6 +3406,10 @@
           "named": true
         },
         {
+          "type": "esql_statement",
+          "named": true
+        },
+        {
           "type": "field_declaration",
           "named": true
         },
@@ -3216,6 +3503,10 @@
         },
         {
           "type": "enumerator",
+          "named": true
+        },
+        {
+          "type": "esql_statement",
           "named": true
         },
         {
@@ -3656,6 +3947,10 @@
         },
         {
           "type": "do_statement",
+          "named": true
+        },
+        {
+          "type": "esql_statement",
           "named": true
         },
         {
@@ -4120,6 +4415,10 @@
     "named": false
   },
   {
+    "type": ":=",
+    "named": false
+  },
+  {
     "type": ";",
     "named": false
   },
@@ -4414,6 +4713,34 @@
   },
   {
     "type": "escape_sequence",
+    "named": true
+  },
+  {
+    "type": "esql_keyword_end_exec",
+    "named": true
+  },
+  {
+    "type": "esql_keyword_execute",
+    "named": true
+  },
+  {
+    "type": "esql_keyword_var",
+    "named": true
+  },
+  {
+    "type": "esql_number",
+    "named": true
+  },
+  {
+    "type": "esql_string",
+    "named": true
+  },
+  {
+    "type": "esql_token",
+    "named": true
+  },
+  {
+    "type": "esql_variable",
     "named": true
   },
   {
