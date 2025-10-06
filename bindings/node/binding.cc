@@ -2,7 +2,7 @@
 
 typedef struct TSLanguage TSLanguage;
 
-extern "C" TSLanguage *tree_sitter_c();
+extern "C" TSLanguage *tree_sitter_c_with_esql();
 
 // "tree-sitter", "language" hashed with BLAKE2
 const napi_type_tag LANGUAGE_TYPE_TAG = {
@@ -11,7 +11,7 @@ const napi_type_tag LANGUAGE_TYPE_TAG = {
 
 Napi::Object Init(Napi::Env env, Napi::Object exports) {
     exports["name"] = Napi::String::New(env, "c");
-    auto language = Napi::External<TSLanguage>::New(env, tree_sitter_c());
+    auto language = Napi::External<TSLanguage>::New(env, tree_sitter_c_with_esql());
     language.TypeTag(&LANGUAGE_TYPE_TAG);
     exports["language"] = language;
     return exports;

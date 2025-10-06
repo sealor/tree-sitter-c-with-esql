@@ -1,11 +1,11 @@
 from unittest import TestCase
 
-import tree_sitter, tree_sitter_c
+import tree_sitter, tree_sitter_c_with_esql
 
 
 class TestLanguage(TestCase):
     def test_can_load_grammar(self):
         try:
-            tree_sitter.Language(tree_sitter_c.language())
+            tree_sitter.Language(tree_sitter_c_with_esql.language())
         except Exception:
             self.fail("Error loading C grammar")

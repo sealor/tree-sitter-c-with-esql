@@ -178,7 +178,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "tree-sitter-c"
+name = "tree-sitter-c_with_esql"
 version = "0.24.1"
 dependencies = [
  "cc",

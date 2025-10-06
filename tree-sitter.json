@@ -29,7 +29,7 @@
       }
     ],
     "links": {
-      "repository": "https://github.com/tree-sitter/tree-sitter-c"
+      "repository": "https://github.com/tree-sitter/tree-sitter-c_with_esql"
     }
   },
   "bindings": {

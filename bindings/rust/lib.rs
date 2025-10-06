@@ -12,7 +12,7 @@
 //! }
 //! "#;
 //! let mut parser = Parser::new();
-//! let language = tree_sitter_c::LANGUAGE;
+//! let language = tree_sitter_c_with_esql::LANGUAGE;
 //! parser
 //!     .set_language(&language.into())
 //!     .expect("Error loading C parser");
@@ -28,11 +28,11 @@
 use tree_sitter_language::LanguageFn;
 
 extern "C" {
-    fn tree_sitter_c() -> *const ();
+    fn tree_sitter_c_with_esql() -> *const ();
 }
 
 /// The tree-sitter [`LanguageFn`] for this grammar.
-pub const LANGUAGE: LanguageFn = unsafe { LanguageFn::from_raw(tree_sitter_c) };
+pub const LANGUAGE: LanguageFn = unsafe { LanguageFn::from_raw(tree_sitter_c_with_esql) };
 
 /// The content of the [`node-types.json`][] file for this grammar.
 ///

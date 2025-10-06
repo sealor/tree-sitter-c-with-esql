@@ -1,5 +1,5 @@
-#ifndef TREE_SITTER_C_H_
-#define TREE_SITTER_C_H_
+#ifndef TREE_SITTER_C_WITH_ESQL_H_
+#define TREE_SITTER_C_WITH_ESQL_H_
 
 typedef struct TSLanguage TSLanguage;
 
@@ -13,4 +13,4 @@ const TSLanguage *tree_sitter_c_with_esql(void);
 }
 #endif
 
-#endif // TREE_SITTER_C_H_
+#endif // TREE_SITTER_C_WITH_ESQL_H_
