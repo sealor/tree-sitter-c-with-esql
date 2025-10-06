@@ -1,18 +1,51 @@
-# tree-sitter-c
+# tree-sitter-c_with_esql
 
-[![CI][ci]](https://github.com/tree-sitter/tree-sitter-c/actions/workflows/ci.yml)
-[![discord][discord]](https://discord.gg/w7nTvsVJhm)
-[![matrix][matrix]](https://matrix.to/#/#tree-sitter-chat:matrix.org)
-[![crates][crates]](https://crates.io/crates/tree-sitter-c)
-[![npm][npm]](https://www.npmjs.com/package/tree-sitter-c)
-[![pypi][pypi]](https://pypi.org/project/tree-sitter-c)
+C grammar with Embedded SQL support for [tree-sitter](https://github.com/tree-sitter/tree-sitter).  
+Forked from [tree-sitter-c](https://github.com/tree-sitter/tree-sitter-c).  
+Adapted from [this C99 grammar](http://slps.github.io/zoo/c/iso-9899-tc3.html).  
 
-C grammar for [tree-sitter](https://github.com/tree-sitter/tree-sitter).
-Adapted from [this C99 grammar](http://slps.github.io/zoo/c/iso-9899-tc3.html).
+Documentation for Embedded SQL:
 
-[ci]: https://img.shields.io/github/actions/workflow/status/tree-sitter/tree-sitter-c/ci.yml?logo=github&label=CI
-[discord]: https://img.shields.io/discord/1063097320771698699?logo=discord&label=discord
-[matrix]: https://img.shields.io/matrix/tree-sitter-chat%3Amatrix.org?logo=matrix&label=matrix
-[npm]: https://img.shields.io/npm/v/tree-sitter-c?logo=npm
-[crates]: https://img.shields.io/crates/v/tree-sitter-c?logo=rust
-[pypi]: https://img.shields.io/pypi/v/tree-sitter-c?logo=pypi&logoColor=ffd242
+- [Embedded SQL - Wikipedia](https://en.wikipedia.org/wiki/Embedded_SQL)
+- [Pro*C - Wikipedia](https://en.wikipedia.org/wiki/Pro*C)
+- [Introduction to Pro*C Embedded SQL](http://infolab.stanford.edu/%7Eullman/fcdb/oracle/or-proc.html)
+- [Oracle  Pro*C Sample Programs](https://download.oracle.com/otn_hosted_doc/timesten/1122/quickstart/html/developer/proc/proc.html)
+
+## NeoVim configuration for lazy.nvim
+
+```lua
+-- nvim/lua/plugins/tree-sitter-c_with_esql.lua:
+---@module "lazy"
+
+return {
+  "sealor/tree-sitter-c_with_esql",
+  dependencies = { "nvim-treesitter/nvim-treesitter" },
+
+  ---@param plugin LazyPlugin
+  config = function(plugin, _)
+    local parser_configs = require("nvim-treesitter.parsers").get_parser_configs()
+
+    ---@type ParserInfo
+    local c_with_esql = {
+      install_info = {
+        url = plugin.dir,
+        files = { "src/parser.c" },
+        generate_requires_npm = false,
+        requires_generate_from_grammar = false,
+      },
+      maintainers = { "@sealor" },
+      filetype = "c_with_esql",
+    }
+
+    parser_configs["c_with_esql"] = c_with_esql
+
+    vim.filetype.add({ extension = { pc = "c_with_esql" } })
+  end,
+
+  ---@param plugin LazyPlugin
+  build = function(plugin)
+    plugin.config(plugin, {})
+    require("nvim-treesitter.install").update()({ "c_with_esql" })
+  end,
+}
+```
