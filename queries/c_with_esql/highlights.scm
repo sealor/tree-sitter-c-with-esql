@@ -339,3 +339,15 @@
   (ms_pointer_modifier)
   (attribute_declaration)
 ] @attribute
+
+; Embedded SQL
+
+(esql_statement (esql_prefix) @type.builtin)
+(esql_keyword) @keyword
+(esql_keyword_execute) @keyword
+(esql_keyword_end_exec) @keyword
+(esql_function_call function: (esql_function) @function.call)
+(esql_operator) @keyword.operator
+(esql_string) @string
+(esql_number) @number
+(esql_variable) @variable.parameter
